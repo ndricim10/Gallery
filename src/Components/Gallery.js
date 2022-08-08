@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./gallery.scss";
+import {useDispatch, useSelector} from 'react-redux'
+import { getPhotos } from "../Redux/Actions/Actions";
+
 export default function Gallery() {
   let data = [
     {
@@ -51,6 +54,13 @@ export default function Gallery() {
         "https://images.pexels.com/photos/12760654/pexels-photo-12760654.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
     },
   ];
+
+
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(getPhotos())
+  }, [dispatch])
 
   return (
     <div className="gallery">
