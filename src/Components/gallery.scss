@@ -35,6 +35,35 @@
   }
 }
 
+.flex-section {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  // align-items: center;
+  gap: 10px;
+
+  span {
+    cursor: pointer;
+    background-color: chocolate;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    font-weight: 700;
+    border-radius: 4px;
+    border: 1px chocolate solid;
+
+    // &:hover {
+    //   background-color: white;
+    //   color: chocolate;
+    // }
+  }
+  .active {
+    background-color: white;
+    color: chocolate;
+  }
+}
+
+
+
 @media (max-width: 991px) {
   .gallery {
     -webkit-column-count: 2;

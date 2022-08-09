@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./gallery.scss";
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { getPhotos } from "../Redux/Actions/Actions";
 
 export default function Gallery() {
@@ -55,25 +55,60 @@ export default function Gallery() {
     },
   ];
 
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getPhotos());
+  }, [dispatch]);
 
-  useEffect(()=>{
-    dispatch(getPhotos())
-  }, [dispatch])
+  const section = [
+    {
+      id: 1,
+      name: "hot",
+    },
+    {
+      id: 2,
+      name: "top",
+    },
+    {
+      id: 3,
+      name: "user",
+    },
+  ];
 
+  const [active, setActive] = useState("");
+
+  function handleActive(value) {
+    setActive(value);
+    console.log("value", value);
+  }
+
+  console.log(active);
   return (
-    <div className="gallery">
-      {data.map((item) => {
-        return (
-          <div className="images" key={item.id}>
-            <img src={item.imgSrc} />
-            <div className="description">
-              <span>{item.description}</span>
+    <div className="home_page">
+      <div className="flex-section">
+        {section.map((sec) => {
+          return (
+            <span onClick={()=>handleActive(sec.name)} 
+            key={sec.id}
+            className={active===sec.name ? 'active' : null}>
+              {sec.name}
+            </span>
+          );
+        })}
+      </div>
+      <div className="gallery">
+        {data.map((item) => {
+          return (
+            <div className="images" key={item.id}>
+              <img src={item.imgSrc} />
+              <div className="description">
+                <span>{item.description}</span>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }
