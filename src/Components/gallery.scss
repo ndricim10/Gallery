@@ -1,4 +1,5 @@
 .gallery {
+  margin-top: 10vh;
   -webkit-column-count: 3;
   -moz-column-count: 3;
   column-count: 3;
@@ -36,6 +37,13 @@
 }
 
 .flex-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  // height: 10vh;
+  z-index: 999;
   display: flex;
   justify-content: center;
   padding: 1rem;

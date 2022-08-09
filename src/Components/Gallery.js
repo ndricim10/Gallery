@@ -64,22 +64,27 @@ export default function Gallery() {
   const section = [
     {
       id: 1,
-      name: "hot",
+      name: "All",
     },
     {
       id: 2,
-      name: "top",
+      name: "Hot",
     },
     {
       id: 3,
-      name: "user",
+      name: "Top",
     },
+    {
+      id: 4,
+      name: "User",
+    },
+    
   ];
 
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState("All");
 
   function handleActive(value) {
-    setActive(value);
+    setActive(value.toLocaleLowerCase());
     console.log("value", value);
   }
 
@@ -89,9 +94,9 @@ export default function Gallery() {
       <div className="flex-section">
         {section.map((sec) => {
           return (
-            <span onClick={()=>handleActive(sec.name)} 
+            <span onClick={()=>handleActive(sec.name.toLocaleLowerCase())} 
             key={sec.id}
-            className={active===sec.name ? 'active' : null}>
+            className={active===sec.name.toLocaleLowerCase() ? 'active' : null}>
               {sec.name}
             </span>
           );
