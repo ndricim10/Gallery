@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./gallery.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { getPhotos } from "../Redux/Actions/Actions";
+import { getPhotos, getPhotosBySection } from "../Redux/Actions/Actions";
 
 export default function Gallery() {
   let data = [
@@ -55,11 +55,26 @@ export default function Gallery() {
     },
   ];
 
+  const [active, setActive] = useState("All");
+  const [viralImages, setViralImages] = useState(true);
+
+  function handleViralImages(e) {
+    setActive(e.target.checked);
+  }
+
+  function handleActive(value) {
+    setActive(value.toLocaleLowerCase());
+  }
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPhotos());
-  }, [dispatch]);
+    if (active === "All") {
+      dispatch(getPhotos());
+    } else {
+      dispatch(getPhotosBySection(active));
+    }
+  }, [dispatch, active]);
 
   const section = [
     {
@@ -78,29 +93,33 @@ export default function Gallery() {
       id: 4,
       name: "User",
     },
-    
   ];
 
-  const [active, setActive] = useState("All");
-
-  function handleActive(value) {
-    setActive(value.toLocaleLowerCase());
-    console.log("value", value);
-  }
-
-  console.log(active);
   return (
     <div className="home_page">
-      <div className="flex-section">
-        {section.map((sec) => {
-          return (
-            <span onClick={()=>handleActive(sec.name.toLocaleLowerCase())} 
-            key={sec.id}
-            className={active===sec.name.toLocaleLowerCase() ? 'active' : null}>
-              {sec.name}
-            </span>
-          );
-        })}
+      <div className="header">
+        <div className="flex-section">
+          {section.map((sec) => {
+            return (
+              <span
+                onClick={() => handleActive(sec.name.toLocaleLowerCase())}
+                key={sec.id}
+                className={
+                  active === sec.name.toLocaleLowerCase() ? "active" : null
+                }
+              >
+                {sec.name}
+              </span>
+            );
+          })}
+        </div>
+        <div className="viral-images" >
+          <input type="checkbox" id="viral" onChange={(e)=>setViralImages(e.target.checked)} checked={viralImages}  />
+          <label htmlFor="viral" >Viral images</label>
+        </div>
+        <div className="window">
+          <span>Window</span>
+        </div>
       </div>
       <div className="gallery">
         {data.map((item) => {
